@@ -1,0 +1,42 @@
+name: Codecov
+
+on:
+  push:
+    paths:
+      - '**.cs'
+      - '**.yml'
+  pull_request:
+    paths:
+      - '**.cs'
+      - '**.yml'
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+      - name: Set MemberApiKey
+        id: setmemberapikey
+        shell: bash
+        run: |
+          if [ "$MEMBER_API_KEY" != "" ]; then
+            dotnet user-secrets set "MemberApiKey" "$MEMBER_API_KEY" --project src/jiraF.Member.API/
+          else
+            dotnet user-secrets set "MemberApiKey" "12345testApiKey" --project src/jiraF.Member.API/
+          fi
+        env:
+          MEMBER_API_KEY: ${{ secrets.MEMBER_API_KEY }}
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      - name: Report Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          path_to_write_report: ./coverage/codecov.xml
