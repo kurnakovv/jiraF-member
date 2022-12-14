@@ -1,3 +1,4 @@
+[![Main repo](https://img.shields.io/static/v1?label=&message=MainRepo&color=orange)](https://github.com/KurnakovMaksim/jiraF/) 
 ![Visitors](http://estruyf-github.azurewebsites.net/api/VisitorHit?user=KurnakovMaksim&repo=jiraF-member&countColor=%237B1E7A&style=flat)
  [![](https://tokei.rs/b1/github/KurnakovMaksim/jiraF-member)](https://github.com/KurnakovMaksim/jiraF-member)
 [![Help Wanted](https://img.shields.io/github/issues/KurnakovMaksim/jiraF-member/help%20wanted?color=green)](https://github.com/KurnakovMaksim/jiraF-member/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
