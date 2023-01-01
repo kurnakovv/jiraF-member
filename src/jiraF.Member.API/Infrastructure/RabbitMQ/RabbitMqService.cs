@@ -25,6 +25,8 @@ public class RabbitMqService : IRabbitMqService
         ConnectionFactory factory = new()
         {
             HostName = _configuration.GetValue<string>("RabbitMQ:HostName"),
+            UserName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER") ?? _configuration["RABBITMQ_DEFAULT_USER"],
+            Password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS") ?? _configuration["RABBITMQ_DEFAULT_PASS"],
         };
         using IConnection connection = factory.CreateConnection();
         using IModel channel = connection.CreateModel();
