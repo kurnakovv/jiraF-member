@@ -6,6 +6,14 @@ namespace jiraF.Member.API.Infrastructure.RabbitMQ;
 
 public class RabbitMqService : IRabbitMqService
 {
+    private readonly IConfiguration _configuration;
+
+    public RabbitMqService(
+        IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
 	public void SendMessage(object obj)
 	{
 		var message = JsonSerializer.Serialize(obj);
@@ -14,7 +22,12 @@ public class RabbitMqService : IRabbitMqService
 
 	public void SendMessage(string message)
 	{
-        ConnectionFactory factory = new() { HostName = "localhost" };
+        ConnectionFactory factory = new()
+        {
+            HostName = _configuration.GetValue<string>("RabbitMQ:HostName"),
+            UserName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER") ?? _configuration["RABBITMQ_DEFAULT_USER"],
+            Password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS") ?? _configuration["RABBITMQ_DEFAULT_PASS"],
+        };
         using IConnection connection = factory.CreateConnection();
         using IModel channel = connection.CreateModel();
         channel.QueueDeclare(queue: "MemberQueue",
