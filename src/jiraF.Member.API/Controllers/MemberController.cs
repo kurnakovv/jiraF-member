@@ -87,12 +87,20 @@ public class MemberController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Bun(Guid id)
     {
-        MemberEntity entity = await _dbContext.Members 
-            .Where(x => x.Id == id)
-            .FirstOrDefaultAsync();
-        _rabbitMqService.SendMessage(entity.Id);
-        _dbContext.Members.Remove(entity);
-        await _dbContext.SaveChangesAsync();
-        return Ok();
+        // TODO: Delete try catch.
+        try
+        {
+            MemberEntity entity = await _dbContext.Members
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+            _rabbitMqService.SendMessage(entity.Id);
+            _dbContext.Members.Remove(entity);
+            await _dbContext.SaveChangesAsync();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return Ok($"Cannot bun member: {id}");
+        }
     }
 }
