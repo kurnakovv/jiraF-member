@@ -3,6 +3,7 @@ using jiraF.Member.API.Dtos.Member;
 using jiraF.Member.API.Dtos.Member.Registration;
 using jiraF.Member.API.Infrastructure.Data.Contexts;
 using jiraF.Member.API.Infrastructure.Data.Entities;
+using jiraF.Member.API.Infrastructure.RabbitMQ;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,11 +14,14 @@ namespace jiraF.Member.API.Controllers;
 public class MemberController : ControllerBase
 {
     private readonly AppDbContext _dbContext;
+    private readonly IRabbitMqService _rabbitMqService;
 
     public MemberController(
-        AppDbContext dbContext)
+        AppDbContext dbContext,
+        IRabbitMqService rabbitMqService)
     {
         _dbContext = dbContext;
+        _rabbitMqService = rabbitMqService;
     }
 
     [HttpGet("{id}")]
@@ -83,11 +87,20 @@ public class MemberController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Bun(Guid id)
     {
-        MemberEntity entity = await _dbContext.Members 
-            .Where(x => x.Id == id)
-            .FirstOrDefaultAsync();
-        _dbContext.Members.Remove(entity);
-        await _dbContext.SaveChangesAsync();
-        return Ok();
+        // TODO: Delete try catch.
+        try
+        {
+            MemberEntity entity = await _dbContext.Members
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+            _rabbitMqService.SendMessage(entity.Id);
+            _dbContext.Members.Remove(entity);
+            await _dbContext.SaveChangesAsync();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return Ok($"Cannot bun member: {id}");
+        }
     }
 }

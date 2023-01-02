@@ -22,11 +22,17 @@ public class RabbitMqService : IRabbitMqService
 
 	public void SendMessage(string message)
 	{
+        string userName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER") ?? _configuration["RABBITMQ_DEFAULT_USER"];
+        string password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS") ?? _configuration["RABBITMQ_DEFAULT_PASS"];
+        string hostName = _configuration.GetValue<string>("RabbitMQ:HostName");
+        int port = 5671;
         ConnectionFactory factory = new()
         {
-            HostName = _configuration.GetValue<string>("RabbitMQ:HostName"),
-            UserName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER") ?? _configuration["RABBITMQ_DEFAULT_USER"],
-            Password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS") ?? _configuration["RABBITMQ_DEFAULT_PASS"],
+            Uri = new Uri($"amqps://{userName}:{password}@{hostName}/{userName}"),
+            HostName = hostName,
+            Port = port,
+            UserName = userName,
+            Password = password,
         };
         using IConnection connection = factory.CreateConnection();
         using IModel channel = connection.CreateModel();
