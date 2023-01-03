@@ -66,41 +66,33 @@ public class MemberController : ControllerBase
     public async Task<RegistrationMemberResponseDto> Registration(RegistrationMemberRequestDto requestDto)
     {
         MemberModel model = new(requestDto.Name);
-        MemberEntity entity = new() 
-        { 
-            Name = model.Name, 
-            DateOfRegistration = DateTime.UtcNow 
+        MemberEntity entity = new()
+        {
+            Name = model.Name,
+            DateOfRegistration = DateTime.UtcNow
         };
         _dbContext.Members.Add(entity);
         await _dbContext.SaveChangesAsync();
-        return new RegistrationMemberResponseDto() 
-        { 
-            Member = new MemberDto 
-            { 
+        return new RegistrationMemberResponseDto()
+        {
+            Member = new MemberDto
+            {
                 Id = entity.Id,
                 DateOfRegistration = entity.DateOfRegistration,
                 Name = entity.Name,
-            } 
+            }
         };
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Bun(Guid id)
     {
-        // TODO: Delete try catch.
-        try
-        {
-            MemberEntity entity = await _dbContext.Members
-                .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
-            _rabbitMqService.SendMessage(entity.Id);
-            _dbContext.Members.Remove(entity);
-            await _dbContext.SaveChangesAsync();
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            return Ok($"Cannot bun member: {id}");
-        }
+        MemberEntity entity = await _dbContext.Members
+            .Where(x => x.Id == id)
+            .FirstOrDefaultAsync();
+        _rabbitMqService.SendMessage(entity.Id);
+        _dbContext.Members.Remove(entity);
+        await _dbContext.SaveChangesAsync();
+        return Ok();
     }
 }
