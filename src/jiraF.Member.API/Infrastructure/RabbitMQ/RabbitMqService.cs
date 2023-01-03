@@ -21,7 +21,7 @@ public class RabbitMqService : IRabbitMqService
 	}
 
 	public void SendMessage(string message)
-	{ 
+	{
         string userName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER") ?? _configuration["RABBITMQ_DEFAULT_USER"];
         string password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS") ?? _configuration["RABBITMQ_DEFAULT_PASS"];
         string hostName = _configuration.GetValue<string>("RabbitMQ:HostName");
