@@ -34,24 +34,12 @@ jobs:
         id: setrabbituser
         shell: bash
         run: |
-          if [ "$RABBITMQ_DEFAULT_USER" != "" ]; then
-            dotnet user-secrets set "RABBITMQ_DEFAULT_USER" "$RABBITMQ_DEFAULT_USER" --project src/jiraF.Member.API/
-          else
-            dotnet user-secrets set "RABBITMQ_DEFAULT_USER" "CI_TESTS" --project src/jiraF.Member.API/
-          fi
-        env:
-          RABBITMQ_DEFAULT_USER: ${{ secrets.RABBITMQ_DEFAULT_USER }}
+          dotnet user-secrets set "RABBITMQ_DEFAULT_USER" "CI_TESTS" --project src/jiraF.Member.API/
       - name: Set RABBITMQ_DEFAULT_PASS
         id: setrabbitpass
         shell: bash
         run: |
-          if [ "$RABBITMQ_DEFAULT_PASS" != "" ]; then
-            dotnet user-secrets set "RABBITMQ_DEFAULT_PASS" "$RABBITMQ_DEFAULT_PASS" --project src/jiraF.Member.API/
-          else
-            dotnet user-secrets set "RABBITMQ_DEFAULT_PASS" "CI_TESTS" --project src/jiraF.Member.API/
-          fi
-        env:
-          RABBITMQ_DEFAULT_PASS: ${{ secrets.RABBITMQ_DEFAULT_PASS }}
+          dotnet user-secrets set "RABBITMQ_DEFAULT_PASS" "CI_TESTS" --project src/jiraF.Member.API/
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
