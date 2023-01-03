@@ -26,6 +26,11 @@ public class RabbitMqService : IRabbitMqService
         string password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS") ?? _configuration["RABBITMQ_DEFAULT_PASS"];
         string hostName = _configuration.GetValue<string>("RabbitMQ:HostName");
         int port = 5671;
+        string ciTests = _configuration.GetValue<string>("RabbitMQ:CITests");
+        if (userName == ciTests && password == ciTests)
+        {
+            return;
+        }
         ConnectionFactory factory = new()
         {
             Uri = new Uri($"amqps://{userName}:{password}@{hostName}/{userName}"),
