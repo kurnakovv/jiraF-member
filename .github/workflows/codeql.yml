@@ -57,7 +57,39 @@ jobs:
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
-
+    - name: Set MemberApiKey
+      id: setmemberapikey
+      shell: bash
+      run: |
+        if [ "$MEMBER_API_KEY" != "" ]; then
+          dotnet user-secrets set "MemberApiKey" "$MEMBER_API_KEY" --project src/jiraF.Member.API/
+        else
+          dotnet user-secrets set "MemberApiKey" "12345testApiKey" --project src/jiraF.Member.API/
+        fi
+      env:
+        MEMBER_API_KEY: ${{ secrets.MEMBER_API_KEY }}
+    - name: Set RABBITMQ_DEFAULT_USER
+      id: setrabbituser
+      shell: bash
+      run: |
+        if [ "$RABBITMQ_DEFAULT_USER" != "" ]; then
+          dotnet user-secrets set "RABBITMQ_DEFAULT_USER" "$RABBITMQ_DEFAULT_USER" --project src/jiraF.Member.API/
+        else
+          dotnet user-secrets set "RABBITMQ_DEFAULT_USER" "CI_TESTS" --project src/jiraF.Member.API/
+        fi
+      env:
+        RABBITMQ_DEFAULT_USER: ${{ secrets.RABBITMQ_DEFAULT_USER }}
+    - name: Set RABBITMQ_DEFAULT_PASS
+      id: setrabbitpass
+      shell: bash
+      run: |
+        if [ "$RABBITMQ_DEFAULT_PASS" != "" ]; then
+          dotnet user-secrets set "RABBITMQ_DEFAULT_PASS" "$RABBITMQ_DEFAULT_PASS" --project src/jiraF.Member.API/
+        else
+          dotnet user-secrets set "RABBITMQ_DEFAULT_PASS" "CI_TESTS" --project src/jiraF.Member.API/
+        fi
+      env:
+        RABBITMQ_DEFAULT_PASS: ${{ secrets.RABBITMQ_DEFAULT_PASS }}
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
