@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jiraF.Member.API", "src\jir
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jiraF.Member.EndToEndTests", "src\jiraF.Member.EndToEndTests\jiraF.Member.EndToEndTests.csproj", "{A9D130F2-65F8-4A7E-9EE1-00F7F3B5A852}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jiraF.Member.IntegrationTests", "src\jiraF.Member.IntegrationTests\jiraF.Member.IntegrationTests.csproj", "{4E58E33B-79FB-421C-9D8F-219F204B12AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +28,14 @@ Global
 		{A9D130F2-65F8-4A7E-9EE1-00F7F3B5A852}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9D130F2-65F8-4A7E-9EE1-00F7F3B5A852}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9D130F2-65F8-4A7E-9EE1-00F7F3B5A852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E58E33B-79FB-421C-9D8F-219F204B12AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E58E33B-79FB-421C-9D8F-219F204B12AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E58E33B-79FB-421C-9D8F-219F204B12AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E58E33B-79FB-421C-9D8F-219F204B12AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{67BA4D7B-8863-4C2B-8FD0-D99A1D3DE0FD} = {FA107EC9-3997-48E7-AED4-6886A8AAE273}
 		{A9D130F2-65F8-4A7E-9EE1-00F7F3B5A852} = {FA107EC9-3997-48E7-AED4-6886A8AAE273}
+		{4E58E33B-79FB-421C-9D8F-219F204B12AE} = {FA107EC9-3997-48E7-AED4-6886A8AAE273}
 	EndGlobalSection
 EndGlobal
