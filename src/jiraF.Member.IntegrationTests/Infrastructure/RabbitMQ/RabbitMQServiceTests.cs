@@ -43,5 +43,12 @@ namespace jiraF.Member.IntegrationTests.Infrastructure.RabbitMQ
             Exception exception = Record.Exception(() => rabbitMqService.SendMessage("TestMessage"));
             Assert.Null(exception);
         }
+
+        [Fact]
+        public void SendMessage_CanSendMessageWithObjectWithoutException_SuccessWithoutExceptions()
+        {
+            Exception exception = Record.Exception(() => _rabbitMqService.SendMessage(new string("TestMessage")));
+            Assert.Null(exception);
+        }
     }
 }
