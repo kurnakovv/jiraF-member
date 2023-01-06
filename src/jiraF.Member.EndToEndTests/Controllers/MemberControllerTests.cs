@@ -11,15 +11,17 @@ using jiraF.Member.API.Dtos.Member.Registration;
 using System.Text.Json;
 using System.Text;
 using System.Collections.Generic;
+using jiraF.Member.API.GlobalVariables;
 
 namespace jiraF.Member.EndToEndTests.Controllers;
 
-public class MemberControllerTests
+public class MemberControllerTests : IDisposable
 {
     private readonly HttpClient _client;
 
     public MemberControllerTests()
     {
+        TestVariables.IsWorkNow = true;
         var application = new WebApplicationFactory<Program>()
             .WithWebHostBuilder(builder =>
             {
@@ -33,6 +35,11 @@ public class MemberControllerTests
             });
 
         _client = application.CreateClient();
+    }
+
+    public void Dispose()
+    {
+        TestVariables.IsWorkNow = false;
     }
 
     [Theory]
