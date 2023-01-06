@@ -1,3 +1,4 @@
+using jiraF.Member.API.GlobalVariables;
 using jiraF.Member.API.Infrastructure.Data.Contexts;
 using jiraF.Member.API.Infrastructure.RabbitMQ;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-#if DEBUG // TODO: Delete this line, now if we do this, tests be broken.
-    options.UseInMemoryDatabase(Guid.NewGuid().ToString());
-#else
-    options.UseInMemoryDatabase("TestData");
+    options.UseInMemoryDatabase(TestVariables.IsWorkNow
+        ? Guid.NewGuid().ToString()
+        : "TestData");
     //options.UseNpgsql(builder.Configuration["ConnectionString"]);
-#endif
 });
 
 builder.Services.AddControllers();

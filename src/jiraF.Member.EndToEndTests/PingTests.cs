@@ -7,15 +7,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using System.Threading.Tasks;
 using System.Net;
+using jiraF.Member.API.GlobalVariables;
 
 namespace jiraF.Member.EndToEndTests
 {
-    public class PingTests
+    public class PingTests : IDisposable
     {
         private readonly HttpClient _client;
 
         public PingTests()
         {
+            TestVariables.IsWorkNow = true;
             var application = new WebApplicationFactory<Program>()
                 .WithWebHostBuilder(builder =>
                 {
@@ -29,6 +31,11 @@ namespace jiraF.Member.EndToEndTests
                 });
 
             _client = application.CreateClient();
+        }
+
+        public void Dispose()
+        {
+            TestVariables.IsWorkNow = false;
         }
 
         [Fact]

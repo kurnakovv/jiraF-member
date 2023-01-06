@@ -1,15 +1,17 @@
-﻿using jiraF.Member.API.Infrastructure.RabbitMQ;
+﻿using jiraF.Member.API.GlobalVariables;
+using jiraF.Member.API.Infrastructure.RabbitMQ;
 using Microsoft.Extensions.Configuration;
 
 namespace jiraF.Member.IntegrationTests.Infrastructure.RabbitMQ
 {
-    public class RabbitMQServiceTests
+    public class RabbitMQServiceTests : IDisposable
     {
         private readonly IConfiguration _configuration;
         private readonly RabbitMqService _rabbitMqService;
 
         public RabbitMQServiceTests()
         {
+            TestVariables.IsWorkNow = true;
             Dictionary<string, string> inMemorySettings = new() {
                 {"RABBITMQ_DEFAULT_USER", Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER")},
                 {"RABBITMQ_DEFAULT_PASS", Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")},
@@ -19,6 +21,11 @@ namespace jiraF.Member.IntegrationTests.Infrastructure.RabbitMQ
                 .AddInMemoryCollection(inMemorySettings)
                 .Build();
             _rabbitMqService = new RabbitMqService(_configuration);
+        }
+
+        public void Dispose()
+        {
+            TestVariables.IsWorkNow = false;
         }
 
         [Fact]
