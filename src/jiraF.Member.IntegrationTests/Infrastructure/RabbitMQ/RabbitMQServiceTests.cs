@@ -54,7 +54,7 @@ namespace jiraF.Member.IntegrationTests.Infrastructure.RabbitMQ
         [Fact]
         public void SendMessage_CanSendMessageWithObjectWithoutException_SuccessWithoutExceptions()
         {
-            Exception exception = Record.Exception(() => _rabbitMqService.SendMessage(new string("TestMessage")));
+            Exception exception = Record.Exception(() => _rabbitMqService.SendMessage((object)new string("TestMessage")));
             Assert.Null(exception);
         }
     }
