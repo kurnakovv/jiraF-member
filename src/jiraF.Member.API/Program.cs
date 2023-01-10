@@ -39,5 +39,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseHealthChecks("/ping");
+app.UseHealthChecks("/testPing");
 
 app.Run();
