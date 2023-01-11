@@ -1,5 +1,5 @@
 [![Main repo](https://img.shields.io/static/v1?label=&message=MainRepo&color=orange)](https://github.com/KurnakovMaksim/jiraF/) 
-![Visitors](http://estruyf-github.azurewebsites.net/api/VisitorHit?user=KurnakovMaksim&repo=jiraF-member&countColor=%237B1E7A&style=flat)
+![visitor badge](https://visitor-badge.glitch.me/badge?page_id=KurnakovMaksim.jiraF-member)
  [![](https://tokei.rs/b1/github/KurnakovMaksim/jiraF-member)](https://github.com/KurnakovMaksim/jiraF-member)
 [![Help Wanted](https://img.shields.io/github/issues/KurnakovMaksim/jiraF-member/help%20wanted?color=green)](https://github.com/KurnakovMaksim/jiraF-member/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
 [![Build/Test](https://github.com/KurnakovMaksim/jiraF-member/actions/workflows/build-test.yml/badge.svg)](https://github.com/KurnakovMaksim/jiraF-member/actions/workflows/build-test.yml)
