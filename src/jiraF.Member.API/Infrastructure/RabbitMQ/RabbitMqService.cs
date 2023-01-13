@@ -31,14 +31,19 @@ public class RabbitMqService : IRabbitMqService
         {
             return;
         }
-        ConnectionFactory factory = new()
+        ConnectionFactory factory = new();
+        if (_configuration.GetValue<bool>("RabbitMQ:IsLocalhost"))
         {
-            Uri = new Uri($"amqps://{userName}:{password}@{hostName}/{userName}"),
-            HostName = hostName,
-            Port = port,
-            UserName = userName,
-            Password = password,
-        };
+            factory.HostName = "localhost";
+        }
+        else
+        {
+            factory.Uri = new Uri($"amqps://{userName}:{password}@{hostName}/{userName}");
+            factory.HostName = hostName;
+            factory.Port = port;
+            factory.UserName = userName;
+            factory.Password = password;
+        }
         using IConnection connection = factory.CreateConnection();
         using IModel channel = connection.CreateModel();
         channel.QueueDeclare(queue: "MemberQueue",

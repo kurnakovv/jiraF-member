@@ -16,6 +16,7 @@ namespace jiraF.Member.IntegrationTests.Infrastructure.RabbitMQ
                 {"RABBITMQ_DEFAULT_USER", Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER")},
                 {"RABBITMQ_DEFAULT_PASS", Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")},
                 {"RabbitMQ:HostName", "armadillo-01.rmq.cloudamqp.com"},
+                {"RabbitMQ:IsLocalhost", "false"}
             };
             _configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(inMemorySettings)
