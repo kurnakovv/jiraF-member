@@ -62,6 +62,12 @@ public class MemberController : ControllerBase
         }).ToList();
     }
 
+    [HttpGet("IsExists/{id}")]
+    public async Task<bool> IsExists(Guid id)
+    {
+        return await _dbContext.Members.AnyAsync(x => x.Id == id);
+    }
+
     [HttpPost]
     public async Task<RegistrationMemberResponseDto> Registration(RegistrationMemberRequestDto requestDto)
     {
