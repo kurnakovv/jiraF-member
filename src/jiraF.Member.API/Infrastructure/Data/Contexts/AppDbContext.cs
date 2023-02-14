@@ -7,8 +7,10 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
+        TestData testData = new(this);
+        testData.AddDefaultMember();
 #if DEBUG
-        new TestData(this).Seed();
+        testData.Seed();
 #endif
     }
 
