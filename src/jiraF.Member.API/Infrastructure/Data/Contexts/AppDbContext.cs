@@ -9,14 +9,10 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
         TestData testData = new(this);
-        // TODO: Delete this check.
-        if (!TestVariables.IsWorkNow)
-        {
-            testData.AddDefaultMember();
-        }
 #if DEBUG
         testData.Seed();
 #endif
+        testData.AddDefaultMember();
     }
 
     public DbSet<MemberEntity> Members { get; set; }

@@ -32,7 +32,7 @@ public class TestData
 
     public void AddDefaultMember()
     {
-        if (_dbContext.Members.Any())
+        if (_dbContext.Members.Any(x => x.Id == new Guid(DefaultMemberVariables.Id)))
         {
             return;
         }
