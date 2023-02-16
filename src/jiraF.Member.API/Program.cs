@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+DefaultMemberVariables.Id = builder.Configuration.GetValue<string>("DefaultMemberId");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseInMemoryDatabase(TestVariables.IsWorkNow
