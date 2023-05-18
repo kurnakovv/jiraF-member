@@ -1,6 +1,7 @@
 ﻿using jiraF.Member.API.GlobalVariables;
 using jiraF.Member.API.Infrastructure.RabbitMQ;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace jiraF.Member.IntegrationTests.Infrastructure.RabbitMQ
 {
@@ -12,13 +13,9 @@ namespace jiraF.Member.IntegrationTests.Infrastructure.RabbitMQ
         public RabbitMQServiceTests()
         {
             TestVariables.IsWorkNow = true;
-            Dictionary<string, string> inMemorySettings = new() {
-                {"RABBITMQ_DEFAULT_USER", Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER")},
-                {"RABBITMQ_DEFAULT_PASS", Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")},
-                {"RabbitMQ:HostName", "armadillo-01.rmq.cloudamqp.com"},
-            };
             _configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(inMemorySettings)
+                .AddJsonFile("appsettings.json")
+                .AddUserSecrets<Program>()
                 .Build();
             _rabbitMqService = new RabbitMqService(_configuration);
         }
