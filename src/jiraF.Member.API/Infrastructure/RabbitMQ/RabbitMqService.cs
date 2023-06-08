@@ -58,3 +58,4 @@ public class RabbitMqService : IRabbitMqService
                        body: body);
     }
 }
+

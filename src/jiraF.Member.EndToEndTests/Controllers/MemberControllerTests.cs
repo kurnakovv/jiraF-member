@@ -46,6 +46,8 @@ public class MemberControllerTests : IDisposable
     [InlineData("/Member/2f857708-6e97-413b-b495-f2161135616a")]
     [InlineData("/Member/2f857708-6e97-413b-b495-f2161135616b")]
     [InlineData("/Member/2f857708-6e97-413b-b495-f2161135616c")]
+    [InlineData("/Member/IsExists/2f857708-6e97-413b-b495-f2161135616a")]
+    [InlineData("/Member/IsExists/2f857708-6e97-413b-b495-f2161135616f")]
     public async Task CheckAllGETApiMethodsIsValid_StatusCode200(string url)
     {
         HttpResponseMessage response = await _client.GetAsync(url);

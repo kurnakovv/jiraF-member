@@ -1,4 +1,5 @@
-﻿using jiraF.Member.API.Infrastructure.Data.Contexts;
+﻿using jiraF.Member.API.GlobalVariables;
+using jiraF.Member.API.Infrastructure.Data.Contexts;
 using jiraF.Member.API.Infrastructure.Data.Entities;
 
 namespace jiraF.Member.API.Infrastructure.Data;
@@ -27,5 +28,20 @@ public class TestData
             _dbContext.Members.AddRange(_memberEntities);
             _dbContext.SaveChanges();
         }
+    }
+
+    public void AddDefaultMember()
+    {
+        if (_dbContext.Members.Any(x => x.Id == new Guid(DefaultMemberVariables.Id)))
+        {
+            return;
+        }
+        _dbContext.Members.Add(new MemberEntity()
+        {
+            Id = new Guid(DefaultMemberVariables.Id),
+            DateOfRegistration = DateTime.UtcNow,
+            Name = "DefaultMember",
+        });
+        _dbContext.SaveChanges();
     }
 }
