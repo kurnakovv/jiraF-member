@@ -94,3 +94,4 @@ public class MemberControllerTests : IDisposable
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }
+
